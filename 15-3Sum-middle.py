@@ -5,35 +5,29 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         nums.sort()
+        if nums == [] or len(nums)<3:
+            return []
+        
+        if nums.count(0) == len(nums):
+            return [[0, 0, 0]]
+        
         resSet = set()
         for i in range(0, len(nums)):
             for j in range(i, len(nums)):
                 if i == j: continue
-                '''
                 diff = 0 - (nums[i] + nums[j])
-                print(diff)
-                if diff in nums:
-                    candidate = (nums[i], nums[j], diff)
-                    resSet.add(candidate)
-                
-                '''
-                
-                for k in range(j, len(nums)):
-                    if j == k:continue
-                    if nums[i] + nums[j] + nums[k] == 0:
-                        candidate = (nums[i], nums[j], nums[k])
-                        resSet.add(candidate)
-                        pass
-                
+                if (diff in nums) and (diff != nums[i]) and (diff != nums[j]):
+                    candidate = [nums[i], nums[j], diff]
+                    candidate.sort()
+                    resSet.add(tuple(candidate))
                 
         resList = []
-        print(resList)
         for item in resSet:
             resList.append(list(item))
             
-        print(resList)
-            
-        return resList
+        if nums.count(0) >= 3: resList.append([0, 0, 0])
 
+        return resList
 s = Solution()
-s.threeSum([1,0,-1])
+A = s.threeSum([0,1])
+print(A)
