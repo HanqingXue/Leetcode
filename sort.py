@@ -20,9 +20,8 @@ def qsort(L):
 
 def elgent_qsort(L):
     if len(L) > 1:
-        return elgent_qsort([x for x in L[1:] if x< L[0]]) + [L[0]] + elgent_qsort([x for x in L[1:] if x>L[0]])
+        return elgent_qsort([x for x in L[1:] if x<= L[0]]) + [L[0]] + elgent_qsort([x for x in L[1:] if x>L[0]])
     else:
         return L
-    pass
 
-print(elgent_qsort([6, 2, 4]))
+print(elgent_qsort([1, 1]))
