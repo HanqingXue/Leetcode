@@ -1,55 +1,95 @@
 class Solution(object):
     def isInt(self, s):
-        s_copy = s
-        s_copy = s_copy.lstrip()
-        s_copy = s_copy.rstrip()
-        if ' ' in s_copy:
-            return False
-        
-        isInt = False
-        s = s.rstrip()
-        if s == '':
-            return isInt 
-        else:
-            for i in range(0, len(s)):
-                if s[i].isdigit():
-                    isInt = True
-                elif s[i] == ' ':
-                    isInt = True
-                else:
-                    return False
-     
-        return isInt 
-        
-    def isFloat(self, s):
-        if s == '': return False 
-        if s.count('.') != 1: return False
-        
-        dotIndex = s.index('.')
-        if len(s[:dotIndex].rstrip()) != len(s[:dotIndex]):
-            return False
-        
-        
-        if dotIndex == 0:
-            candiate = s[dotIndex+1:]
-            s_lstrip = candiate.lstrip()
-            if len(candiate) == len(s_lstrip):
-                return self.isInt(s[dotIndex+1:])
-            else:
+        INVALID = 0;
+        SPACE = 1;
+        DIGIT = 2;
+        OP = 3;
+        transitionTable = [[-1, 0, 1, 1], [-1, 2, 1, -1], [-1, 2, -1, -1]]
+        state = 0;
+        i = 0;
+        while i < len(s):
+            inputtype = INVALID
+            if s[i] == ' ':
+                inputtype = SPACE
+            elif s[i].isdigit():
+                inputtype = DIGIT
+            elif s[i] in '+-':
+                inputtype = OP
+            
+            state = transitionTable[state][inputtype]
+            if state == -1:
                 return False
-        else:
-            return self.isInt(s[:dotIndex]) or self.isInt(s[dotIndex+1:])
+            else:
+                i += 1
+        return state == 2 or state == 1
+    
+    def isFloat(self, s):
+        INVALID = 0;
+        DOT = 1;
+        SPACE = 2;
+        DIGIT = 3;
+        OP = 4
+        E=5
+        transitionTable = [[-1, 1, 0 , 2, 2, -1],
+                           [-1, -1, 4, 1, -1, -1],
+                           [-1, 3, -1, 2, -1, -1],
+                           [-1, -1, 3, 1, -1, 5],
+                           [-1, -1, 4, -1, -1, -1],
+                           [-1, -1, -1, 1, -1, 1]]
+        state = 0;
+        i = 0;
+        while i < len(s):
+            inputtype = INVALID
+            if s[i] == ' ':
+                inputtype = SPACE
+            elif s[i].isdigit():
+                inputtype = DIGIT
+            elif s[i] == '.':
+                inputtype = DOT
+            elif s[i] in '+-':
+                inputtype = OP
+            elif s[i] in 'Ee':
+                inputtype = E
+                
+            state = transitionTable[state][inputtype]
+            if state == -1:
+                return False
+            else:
+                i += 1
+        return state == 1 or state == 3 or state == 4
     
     def isSci(self, s):
-        if s == '': return False 
-        if s.count('e') != 1: return False
-        
-        dotIndex = s.index('e')
-
-        if dotIndex == 0:
-            return False
-        else:
-            return self.isInt(s[:dotIndex]) and self.isInt(s[dotIndex+1:])    
+        INVALID = 0;
+        SPACE = 1;
+        DIGIT = 2;
+        E = 3;
+        OP = 4;
+        transitionTable = [[-1, 0, 1, -1, 5],
+                           [-1, -1, 1, 2, -1],
+                           [-1, -1, 3, -1, 4],
+                           [-1, 6, 3, -1, -1],
+                           [-1, -1, 3, -1, -1],
+                           [-1, -1, 1, -1, -1],
+                           [-1, 6, -1, -1, -1]]
+        state = 0;
+        i = 0;
+        while i < len(s):
+            inputtype = INVALID
+            if s[i] == ' ':
+                inputtype = SPACE
+            elif s[i].isdigit():
+                inputtype = DIGIT
+            elif s[i] in 'Ee':
+                inputtype = E
+            elif s[i] in '+-':
+                inputtype = OP
+            
+            state = transitionTable[state][inputtype]
+            if state == -1:
+                return False
+            else:
+                i += 1
+        return state == 3 or state == 6
     
     def isNumber(self, s):
         """
@@ -58,15 +98,22 @@ class Solution(object):
         """
         if s == '':
             return False
-        if '.'in s and 'e' in s:
+        count = 0
+        for i in range(0, len(s)):
+            if s[i].isdigit():
+                count += 1
+
+        if count == 0 :
             return False
-        elif self.isInt(s) or self.isFloat(s) or self.isSci(s):
+
+        
+        if s.strip() == '.': return False
+        
+        if self.isInt(s) or self.isFloat(s) or self.isSci(s):
             return True
         else:
             return False
- 
-if __name__ == '__main__':
-     s = Solution()
-     print s.isInt(' 0')
-     print s.isFloat('0.e')
-     print s.isFloat('11.a11')
+
+
+s = Solution()
+print(s.isSci('46.E3'))
