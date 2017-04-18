@@ -5,8 +5,6 @@ class Solution(object):
         :rtype: bool
         """
         s = s.lower()
-        
-        
         if s == '':
             return True
         
@@ -14,13 +12,14 @@ class Solution(object):
         for i in range(0, len(s)):
             if s[i].isdigit() or s[i].isalpha():
                 s_list.append(s[i])
-
+        
         s = s_list
-        if len(s)%2 == 1:
-            mid  = len(s)/2
+        if len(s) % 2 == 1:
+            mid = len(s) / 2
             s.pop(int(mid))
         
-        l = 0; r= len(s)-1
+        l = 0;
+        r = len(s) - 1
         while l < r:
             if s[l] == s[r]:
                 pass
