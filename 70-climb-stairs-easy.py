@@ -1,9 +1,8 @@
 
 class Solution(object):
-    def __init__(self):
-        super(Solution, self).__init__()
-        self.A = [0]*1000
     
+    self.A = [0]*100
+        
     def climbStairs(self, n):
         """
         :type n: int
@@ -31,18 +30,25 @@ class Solution(object):
             return self.iterClimb(n-1) + self.iterClimb(n-2)
         
     def dpClimb(self, n ):
+        print(A)
         if n <= 2 :
-            self.A[n] = n
+            A[n] = n
             
-        if self.A[n] > 0:
-            return self.A[n]
+        if A[n] >0:
+            return A[n]
         else:
-            self.A[n] = self.dpClimb(n-1) + self.dpClimb(n-2)
-        
-        return self.A[n]
+            return  A[n-1] + A[n-2]
 
 
 if __name__ == '__main__':
     s = Solution()
     for i in range(0, 100):
-        pass
+        print(s.dpClimb(i))
+
+class ClassName(object):
+    """docstring for ClassName"""
+    def __init__(self, arg):
+        super(ClassName, self).__init__()
+        self.arg = arg
+        
+        
