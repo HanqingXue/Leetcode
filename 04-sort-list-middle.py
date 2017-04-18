@@ -14,7 +14,6 @@ class Solution(object):
         #print nums1[ ]
 
 if __name__ == '__main__':
-	s = Solution()
+    s = Solution()
 
-	s.findMedianSortedArrays([1, 3], [2]) 
-	pass
+    s.findMedianSortedArrays([1, 3], [2])
