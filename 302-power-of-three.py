@@ -1,5 +1,5 @@
 class Solution(object):
-    def isPowerOfThree(self, n):
+    def isPowerOfThree1(self, n):
         """
         :type n: int
         :rtype: bool
@@ -8,7 +8,14 @@ class Solution(object):
             return True
         else:
             return False
-            
+    
+    def isPowerofThree(self, n):
+        if n < 3:
+            return False
+        elif n==3 :
+            return True
+        else:
+            return self.isPowerofThree(n/3)
 if __name__ == '__main__':
     s = Solution()
-    print(s.isPowerOfThree(27))
+    print(s.isPowerofThree(15))
