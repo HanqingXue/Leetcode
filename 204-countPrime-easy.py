@@ -38,6 +38,10 @@ class Solution(object):
         for i in range(2, sqrtn + 1):  # xrange for Py2
             if s[i]:
                 count += 1
-                s[i * i: n: i] = [False] * len(range(i * i, n, i))  # xrange for Py2
+                s[i*i : n: i] = [False] * len(range(i * i, n, i))  # xrange for Py2
         print(count)
         return s.count(True)
+    
+if __name__ == '__main__':
+    s = Solution()
+    s.countPrimes(99983)
