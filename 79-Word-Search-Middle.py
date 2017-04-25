@@ -27,10 +27,6 @@ class Solution(object):
         
         return True
 
-
-class Solution(object):
-
-
 if __name__== '__main__':
     '''
     case:
