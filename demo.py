@@ -55,12 +55,18 @@ def GrahamScan(x,y):
 		if y[i]<minn: #(x[tmp],y[tmp])-->y轴最低坐标
 			minn=y[i]
 			tmp = i
+	print 'tmp'
+	print x[tmp]
+	print y[tmp]
+
 	d = {}  #利用字典的排序
 	for i in range(max_num):	#计算极角
 		if (mat[i][0],mat[i][1])==(x[tmp],y[tmp]):mat[i][2]=0
 		else:mat[i][2]=math.atan2((mat[i][1]-y[tmp]),(mat[i][0]-x[tmp]))
 		d[(mat[i][0],mat[i][1])]=mat[i][2]
 	lst=sorted(d.items(),key=lambda e:e[1]) #按极角由小到大排序
+	print 'mat'
+	print mat
 	for i in range(max_num):	#更新mat为排序后的矩阵
 		((x,y),eth0)=lst[i]
 		mat[i][0],mat[i][1],mat[i][2]=x,y,eth0
@@ -178,7 +184,7 @@ def DivideConquer(x,y):
 	CHQ=GrahamScan(x,y)
 	return CHQ
 #main
-max_num = 30 #最大点数
+max_num = 10 #最大点数
 x=100*numpy.random.random(max_num)#[0,100)
 y=100*numpy.random.random(max_num)
 drawGraph(x,y)  #原始图
