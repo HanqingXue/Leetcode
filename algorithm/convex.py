@@ -3,7 +3,6 @@ import numpy as np
 import matplotlib.pylab as plt
 import random
 import math
-
 class Stack(object):
     def __init__(self):
         self.stack = []
@@ -112,8 +111,6 @@ class Convex(object):
         return (vx * wy - vy * wx)
         
     def force(self, points):
-        plt.figure()
-        plt.title('Convex of {} points'.format(len(points)))
         ans = []
         boundpoint = set([])
         points_set = set(points)
@@ -128,20 +125,12 @@ class Convex(object):
                     boundpoint.add(points[i])
                     boundpoint.add(points[j])
                     pass
-        
-        plt.scatter([points[i].x for i in range(0, len(points))], [points[i].y for i in range(0, len(points))])
-        for item in ans:
-            plt.plot([item.start.x, item.end.x], [item.start.y, item.end.y], "--")
-        #plt.show()
-        return boundpoint
-    
-    
-    
+        return boundpoint, ans
+
     def graham(self, points):
         points.sort(key=lambda point: point.y)
         point_base = points[0]
         origin_point = Point(0, 0)
-        plt.figure()
         for item in points:
             polar = self.get_polar(point_base, item)
             item.set_polar(polar)
@@ -158,15 +147,9 @@ class Convex(object):
                 stack.pop()
             stack.push(point)
 
-        plt.figure()
-        plt.scatter([points[i].x for i in range(0, len(points))], [points[i].y for i in range(0, len(points))])
-        plt.plot([stack.stack[0].x, stack.stack[-1].x], [stack.stack[0].y, stack.stack[-1].y], "--")
-
         for i in range(1, len(stack.stack)):
             plt.plot([stack.stack[i-1].x, stack.stack[i].x], [stack.stack[i-1].y, stack.stack[i].y], "--")
-        
-        #plt.show()
-        
+               
         return stack
     
     def divideConquer(self, points):
@@ -186,25 +169,3 @@ class Convex(object):
         merge = sq1 + sq2 + CHQ_L.stack
         CHQ = self.graham(merge)
         return CHQ
-        
-if __name__ == '__main__':
-    convex = Convex()
-    point = convex.get_points(100)
-    print(point)
-    #convex.force(point)
-    #ans = convex.graham(point)
-    #ans2 = convex.force(point)
-    print('here')
-    force = convex.force(point)
-    chq = convex.divideConquer(point).stack
-    s1 = set([])
-    s2 = set([])
-    
-    for item in chq:
-        print(item.x)
-        s1.add((item.x, item.y))
-    for item in force:
-        print(item.x)
-        s2.add((item.x, item.y))
-        
-    assert s1 == s2
