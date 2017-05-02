@@ -34,7 +34,6 @@ class Stack(object):
     def nextTotop(self):
         return self.stack[-2]
 
-
 class Point(object):
     """docstring for point"""
     
@@ -178,23 +177,24 @@ class Main(object):
     def __init__(self):
         super(Main, self).__init__()
         self.main()
+        #self.test_speed()
 
     def test_time(self, number):
         convex = Convex()
         points = convex.get_points(number)
         
-        force_time_srart = time.time()
-        force, ans = convex.force(points)
-        force_time_end = time.time()
-
         graham_time_start = time.time()
         stack = convex.graham(points)
         graham_time_end = time.time()
-
+        print 'Done graham '
         dc_time_start = time.time()
         hcq = convex.divideConquer(points)
         dc_time_end = time.time()
-        
+        print 'Done dc'
+        force_time_srart = time.time()
+        force, ans = convex.force(points)
+        force_time_end = time.time()
+        print 'Done force'
         t1 = force_time_end - force_time_srart
         t2 = graham_time_end - graham_time_start
         t3 = dc_time_end - dc_time_start
@@ -237,5 +237,26 @@ class Main(object):
         t1, t2, t3, points = self.test_time(4000)
         pass
     
+    def test_speed(self):
+        convex = Convex()
+        f = open('time.csv', 'w')
+        f.write('Samples,GrahamScan,DC\n')
+        number_size = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 10000, 15000, 20000, 25000, 30000, 100000, 200000, 300000, 1000000]
+        for i in range(0, len(number_size)):
+            points = convex.get_points(number_size[i])
+            
+            graham_time_start = time.time()
+            stack = convex.graham(points)
+            graham_time_end = time.time()
+            print 'Done graham '
+            dc_time_start = time.time()
+            hcq = convex.divideConquer(points)
+            dc_time_end = time.time()
+            print 'Done dc'
+            g_time = graham_time_end - graham_time_start
+            dc_time = dc_time_end - dc_time_start
+            f.write("{},{},{}\n".format(str(number_size[i]), str(g_time), str(dc_time)))
+
+
 if __name__ == '__main__':
     main = Main()
