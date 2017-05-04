@@ -2,11 +2,11 @@ import pulp
 import random
 
 class SCP(object):
-    def __init__(self):
+    def __init__(self, num):
         super(SCP, self).__init__()
         self.X = []
         self.F = []
-        self.data_generator(100)
+        self.data_generator(num)
         
     def data_generator(self, N):
         self.X = range(N)
@@ -102,9 +102,7 @@ class SCP(object):
         scp_model.solve()
     
         lp_result = [x[item].value() for item in sub_sets]
-        print(lp_result)
         f = max([sum(item) for item in subject])
-        print(f)
         if f == 0:
             f = 0.0001
     
@@ -114,9 +112,24 @@ class SCP(object):
     
         return C
     
+def main(num):
+    S = SCP(num)
+    g = S.greedy()
+    g_ans = set([])
+    print('*******Greedy**********')
+    for item in g:
+        print(item)
+        g_ans = g_ans | set(item)
+
+    lp = S.LP()
+    lp_ans = set([])
+    print('************LP************')
+    for item in lp:
+        print(item)
+        lp_ans = lp_ans | set(item)
+    
+    if lp_ans == range(num):
+        print('ok')
     
 if __name__ == '__main__':
-    S = SCP()
-    g = S.greedy()
-    ROUND = S.LP()
-    print (ROUND)
+    main(100)
