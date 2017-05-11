@@ -1,5 +1,6 @@
 import pulp
 import random
+import  time
 
 class SCP(object):
     def __init__(self, num):
@@ -102,6 +103,8 @@ class SCP(object):
         scp_model.solve()
     
         lp_result = [x[item].value() for item in sub_sets]
+        print 'I am result: {}'.format(lp_result)
+
         f = max([sum(item) for item in subject])
         if f == 0:
             f = 0.0001
@@ -130,6 +133,27 @@ def main(num):
     
     if lp_ans == range(num):
         print('ok')
+        
+def test_time():
+    numbers = [5000]
+    ans = open('ans.csv', 'w')
+    ans.write('Greedy,LP\n')
+    for item in numbers:
+        S = SCP(item)
+        t1_s = time.time()
+        S.greedy()
+        t1_e = time.time()
+        t2_s = time.time()
+        S.LP()
+        t2_e = time.time()
+        t1 = t1_e - t1_s
+        t2 = t2_e - t2_s
+        ans.write('{},{}\n'.format(t1, t2))
     
 if __name__ == '__main__':
+    
     main(100)
+    
+    '''
+    test_time()
+    '''
