@@ -103,7 +103,7 @@ class SCP(object):
         scp_model.solve()
     
         lp_result = [x[item].value() for item in sub_sets]
-        print 'I am result: {}'.format(lp_result)
+        #print 'I am result: {}'.format(lp_result)
 
         f = max([sum(item) for item in subject])
         if f == 0:
@@ -117,18 +117,24 @@ class SCP(object):
     
 def main(num):
     S = SCP(num)
+    t1 = time.time()
     g = S.greedy()
+    t2 = time.time()
+    print t2 - t1
     g_ans = set([])
     print('*******Greedy**********')
     for item in g:
-        print(item)
+        #print(item)
         g_ans = g_ans | set(item)
 
+    t3 = time.time()
     lp = S.LP()
+    t4 = time.time()
+    print t4 - t3
     lp_ans = set([])
     print('************LP************')
     for item in lp:
-        print(item)
+        #print(item)
         lp_ans = lp_ans | set(item)
     
     if lp_ans == range(num):
@@ -152,7 +158,7 @@ def test_time():
     
 if __name__ == '__main__':
     
-    main(100)
+    main(5000)
     
     '''
     test_time()
