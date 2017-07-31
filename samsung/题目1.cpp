@@ -159,6 +159,10 @@ double CalcExp(string express)
 
 	while (c != '=' || x != '=')			
 	{
+		
+		cout << "c:" << c << endl;
+		cout << "x:" << x << endl;
+
 		if (IsOperator(c))	
 		{
 			if (flag)		
@@ -166,6 +170,9 @@ double CalcExp(string express)
 				tempNum[j] = 0;
 				j = 0;
 				num = NumberSplicing(tempNum);	
+
+				cout << 'num';
+				cout << num;
 												
 				data.push(num);			
 				num = 0; 				
@@ -210,8 +217,7 @@ double CalcExp(string express)
 			return 0;
 		}
 
-		x = oper.top();		
-							
+		x = oper.top();
 	}
 
 	num = data.top();
