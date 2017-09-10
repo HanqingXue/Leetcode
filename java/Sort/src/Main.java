@@ -2,7 +2,12 @@ public class Main {
 
     public static void main(String[] args) {
         int [] data = {7, 3, 5, 8, 2, 6, 4, 1, 0};
-        SelectSort(data);
+        /*SelectSort(data);
+        assert isSort(data);
+        show(data);*/
+
+        show(data);
+        InsertSort(data);
         assert isSort(data);
         show(data);
 
@@ -43,6 +48,27 @@ public class Main {
                 if (less(numArray[j], numArray[min])) min = j;
             }
             exch(numArray, i, min);
+        }
+    }
+
+    public static void InsertSort(int [] numArray) {
+        for (int i = 0; i < numArray.length; i++)
+            for (int j = i; j > 0 && less(numArray[j], numArray[j-1]); j --) {
+                exch(numArray, j, j-1);
+            }
+    }
+
+    public static void ShellSort(int [] numArray) {
+        int N = numArray.length;
+        int h = 1;
+        if (h < N / 3) h = 3*h + 1;
+        while(h >= 1) {
+            for (int i = 0; i < numArray.length; i++) {
+                for (int j = i; j >= h && less(numArray[j], numArray[j - 1]); j -= h) {
+                    exch(numArray, j, j - 1);
+                }
+            }
+            h /= 3;
         }
     }
 }
